@@ -7,12 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Service'i interface üzerinden ekliyoruz
 builder.Services.AddSingleton<ICalculatorService, CalculatorService>();
 
+// SoapCore için gerekli servisler
+builder.Services.AddSoapCore();
+
 var app = builder.Build();
 app.UseRouting();
-
+// wsdl
 app.UseEndpoints(endpoints =>
 {
     endpoints.UseSoapEndpoint<ICalculatorService>("/Calculator.asmx",
+        new SoapEncoderOptions(),
+        SoapSerializer.DataContractSerializer);
+    
+    // WSDL için ayrı endpoint
+    endpoints.UseSoapEndpoint<ICalculatorService>("/Calculator.wsdl",
         new SoapEncoderOptions(),
         SoapSerializer.DataContractSerializer);
 });
@@ -34,11 +42,19 @@ public interface ICalculatorService
 // ---- Service Implementation ----
 public class CalculatorService : ICalculatorService
 {
-    public SunucuResponse Topla(SunucuRequest request) =>
-        new SunucuResponse { Sonuc = request.Sayi1 + request.Sayi2 };
+    public SunucuResponse Topla(SunucuRequest request)
+    {
+        if (request == null)
+            throw new FaultException("Request null olamaz.");
+            
+        return new SunucuResponse { Sonuc = request.Sayi1 + request.Sayi2 };
+    }
 
     public SunucuResponse Cikar(SunucuRequest request)
     {
+        if (request == null)
+            throw new FaultException("Request null olamaz.");
+            
         if (request.Sayi1 < request.Sayi2)
             throw new FaultException("Sayi1, sayi2'den küçük olamaz.");
 
