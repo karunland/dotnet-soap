@@ -63,14 +63,14 @@ public class CalculatorService : ICalculatorService
 }
 
 // ---- Data Contracts ----
-[DataContract]
+[DataContract(Namespace = "http://tempuri.org/")]
 public record SunucuRequest
 {
     [DataMember] public int Sayi1 { get; set; }
     [DataMember] public int Sayi2 { get; set; }
 }
 
-[DataContract]
+[DataContract(Namespace = "http://tempuri.org/")]
 public record SunucuResponse
 {
     [DataMember] public int Sonuc { get; set; }
