@@ -6,13 +6,34 @@ SOAPAction: http://tempuri.org/loginRequestMethod
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
    <soapenv:Header/>
    <soapenv:Body>
-      <tem:YourRequest>
-         <tem:password>YourPassword</tem:password>
-         <tem:username>YourUsername</tem:username>
-        #  <tem:anotherRequest>
-        #     <tem:password2>YourPassword2</tem:password2>
-        #     <tem:username2>YourUsername2</tem:username2>
-        #  </tem:anotherRequest>
-      </tem:YourRequest>
+      <tem:Request>
+         <tem:username2>YourUsername2</tem:username2>
+         <tem:password2>YourPassword2</tem:password2>
+         <tem:anotherRequest>
+            <tem:password>YourPassword</tem:password>
+            <tem:username>YourUsername</tem:username>
+         </tem:anotherRequest>
+      </tem:Request>
    </soapenv:Body>
+</soapenv:Envelope>
+
+POST http://localhost:5000/Calculator.asmx
+Content-Type: text/xml; charset=utf-8
+SOAPAction: http://tempuri.org/reconciliateRequest
+
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="https://payment.fairfinansman.com.tr/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tem:Request>
+      <tem:arg0>
+        <tem:CompanyId>12345</tem:CompanyId>
+        <tem:BankId>10</tem:BankId>
+        <tem:BankUserName>bank.user</tem:BankUserName>
+        <tem:SessionId>ABCDEF-123456</tem:SessionId>
+        <tem:ReconDate>2025-09-04</tem:ReconDate>
+        <tem:ReconType>Daily</tem:ReconType>
+      </tem:arg0>
+    </tem:Request>
+  </soapenv:Body>
 </soapenv:Envelope>
