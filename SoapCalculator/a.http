@@ -9,6 +9,10 @@ SOAPAction: http://tempuri.org/loginRequestMethod
       <tem:YourRequest>
          <tem:password>YourPassword</tem:password>
          <tem:username>YourUsername</tem:username>
+        #  <tem:anotherRequest>
+        #     <tem:password2>YourPassword2</tem:password2>
+        #     <tem:username2>YourUsername2</tem:username2>
+        #  </tem:anotherRequest>
       </tem:YourRequest>
    </soapenv:Body>
 </soapenv:Envelope>

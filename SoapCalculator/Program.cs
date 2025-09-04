@@ -14,17 +14,6 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 app.UseRouting();
 
-// Middleware: raw SOAP body'yi yakala ve sakla
-app.Use(async (context, next) =>
-{
-	context.Request.EnableBuffering();
-	using var reader = new StreamReader(context.Request.Body, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, bufferSize: 1024, leaveOpen: true);
-	var body = await reader.ReadToEndAsync();
-	context.Items["RawSoapBody"] = body;
-	context.Request.Body.Position = 0;
-	await next();
-});
-
 app.UseEndpoints(endpoints =>
 {
 	_ = endpoints.UseSoapEndpoint<CalculatorService>("/Calculator.asmx",
@@ -37,21 +26,11 @@ app.Run();
 [ServiceContract(Namespace = "http://tempuri.org/")]
 class CalculatorService
 {
-	private readonly IHttpContextAccessor _httpContextAccessor;
-
-	public CalculatorService(IHttpContextAccessor httpContextAccessor)
-	{
-		_httpContextAccessor = httpContextAccessor;
-	}
 
 	[OperationContract(Name = "loginRequestMethod")]
 	string LoginRequestMethod(SoapBody<LoginRequest> input)
 	{
-		// Debug amaçlı: tam gelen SOAP body
-		var raw = _httpContextAccessor.HttpContext?.Items["RawSoapBody"] as string ?? string.Empty;
-		Console.WriteLine(raw);
-		// Burada raw XML'i loglayabilir veya manuel serialize/parse edebilirsiniz
-		return $"success {input.Request.Password} {input.Request.Username} \n ";
+		return $"success {input.Request.Password} {input.Request.Username}";
 	}
 }
 
