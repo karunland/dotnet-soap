@@ -1,0 +1,14 @@
+POST http://localhost:5000/Calculator.asmx
+Content-Type: text/xml; charset=utf-8
+SOAPAction: http://tempuri.org/loginRequestMethod
+
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:YourRequest>
+         <tem:password>YourPassword</tem:password>
+         <tem:username>YourUsername</tem:username>
+      </tem:YourRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
