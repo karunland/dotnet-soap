@@ -19,19 +19,19 @@ class Program
             Console.WriteLine("=== SOAP Calculator Client ===\n");
 
             // Toplama işlemi
-            var toplamaRequest = new SunucuRequest { Sayi1 = 10, Sayi2 = 5 };
+            var toplamaRequest = new ToplaSunucuRequest { Sayi1 = 10, Sayi2 = 5 };
             var toplamaSonuc = client.Topla(toplamaRequest);
             Console.WriteLine($"Toplama: {toplamaRequest.Sayi1} + {toplamaRequest.Sayi2} = {toplamaSonuc.Sonuc}");
 
             // Çıkarma işlemi
-            var cikarmaRequest = new SunucuRequest { Sayi1 = 15, Sayi2 = 7 };
+            var cikarmaRequest = new CikarSunucuRequest { Sayi1 = 15, Sayi2 = 7 };
             var cikarmaSonuc = client.Cikar(cikarmaRequest);
             Console.WriteLine($"Çıkarma: {cikarmaRequest.Sayi1} - {cikarmaRequest.Sayi2} = {cikarmaSonuc.Sonuc}");
 
             // Hata durumu testi
             try
             {
-                var hataliRequest = new SunucuRequest { Sayi1 = 3, Sayi2 = 10 };
+                var hataliRequest = new CikarSunucuRequest { Sayi1 = 3, Sayi2 = 10 };
                 var hataliSonuc = client.Cikar(hataliRequest);
             }
             catch (FaultException ex)
@@ -54,8 +54,8 @@ public class CalculatorClient : ClientBase<ICalculatorService>, ICalculatorServi
     public CalculatorClient(Binding binding, EndpointAddress remoteAddress)
         : base(binding, remoteAddress) { }
 
-    public SunucuResponse Topla(SunucuRequest request) => Channel.Topla(request);
-    public SunucuResponse Cikar(SunucuRequest request) => Channel.Cikar(request);
+    public SunucuResponse Topla(ToplaSunucuRequest request) => Channel.Topla(request);
+    public SunucuResponse Cikar(CikarSunucuRequest request) => Channel.Cikar(request);
 }
 
 // ---- Service Contract ----
@@ -63,15 +63,15 @@ public class CalculatorClient : ClientBase<ICalculatorService>, ICalculatorServi
 public interface ICalculatorService
 {
     [OperationContract]
-    SunucuResponse Topla(SunucuRequest request);
+    SunucuResponse Topla(ToplaSunucuRequest request);
 
     [OperationContract]
-    SunucuResponse Cikar(SunucuRequest request);
+    SunucuResponse Cikar(CikarSunucuRequest request);
 }
 
 // ---- Data Contracts ----
-[DataContract]
-public record SunucuRequest
+[DataContract(Namespace = "http://tempuri.org/")]
+public record ToplaSunucuRequest
 {
     [DataMember]
     public int Sayi1 { get; set; }
@@ -80,7 +80,17 @@ public record SunucuRequest
     public int Sayi2 { get; set; }
 }
 
-[DataContract]
+[DataContract(Namespace = "http://tempuri.org/")]
+public record CikarSunucuRequest
+{
+    [DataMember]
+    public int Sayi1 { get; set; }
+
+    [DataMember]
+    public int Sayi2 { get; set; }
+}
+
+[DataContract(Namespace = "http://tempuri.org/")]
 public record SunucuResponse
 {
     [DataMember]

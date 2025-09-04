@@ -1,77 +1,39 @@
 using System.ServiceModel;
-using System.Runtime.Serialization;
 using SoapCore;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Service'i interface üzerinden ekliyoruz
-builder.Services.AddSingleton<ICalculatorService, CalculatorService>();
-
-// SoapCore için gerekli servisler
 builder.Services.AddSoapCore();
+builder.Services.AddSingleton<CalculatorService>();
 
 var app = builder.Build();
 app.UseRouting();
-// wsdl
+
 app.UseEndpoints(endpoints =>
 {
-    endpoints.UseSoapEndpoint<ICalculatorService>("/Calculator.asmx",
-        new SoapEncoderOptions(),
-        SoapSerializer.DataContractSerializer);
-    
-    // WSDL için ayrı endpoint
-    endpoints.UseSoapEndpoint<ICalculatorService>("/Calculator.wsdl",
+    _ = endpoints.UseSoapEndpoint<CalculatorService>("/Calculator.asmx",
         new SoapEncoderOptions(),
         SoapSerializer.DataContractSerializer);
 });
 
-app.Urls.Add("http://localhost:5000");
 app.Run();
 
-// ---- Service Contract ----
-[ServiceContract]
-public interface ICalculatorService
+[ServiceContract(Namespace = "http://tempuri.org/")]
+class CalculatorService
 {
-    [OperationContract]
-    SunucuResponse Topla(SunucuRequest request);
-
-    [OperationContract]
-    SunucuResponse Cikar(SunucuRequest request);
-}
-
-// ---- Service Implementation ----
-public class CalculatorService : ICalculatorService
-{
-    public SunucuResponse Topla(SunucuRequest request)
-    {
-        if (request == null)
-            throw new FaultException("Request null olamaz.");
-            
-        return new SunucuResponse { Sonuc = request.Sayi1 + request.Sayi2 };
-    }
-
-    public SunucuResponse Cikar(SunucuRequest request)
-    {
-        if (request == null)
-            throw new FaultException("Request null olamaz.");
-            
-        if (request.Sayi1 < request.Sayi2)
-            throw new FaultException("Sayi1, sayi2'den küçük olamaz.");
-
-        return new SunucuResponse { Sonuc = request.Sayi1 - request.Sayi2 };
-    }
-}
-
-// ---- Data Contracts ----
-[DataContract(Namespace = "http://tempuri.org/")]
-public record SunucuRequest
-{
-    [DataMember] public int Sayi1 { get; set; }
-    [DataMember] public int Sayi2 { get; set; }
+    [OperationContract(Name = "loginRequestMethod")]
+    string loginRequestMethod(Request request)
+        => $"success {request.Password} {request.Username}";
 }
 
 [DataContract(Namespace = "http://tempuri.org/")]
-public record SunucuResponse
+class Request
 {
-    [DataMember] public int Sonuc { get; set; }
+    [DataMember(Name = "password", Order = 1)]
+    public string Password { get; set; } = string.Empty;
+    [DataMember(Name = "username", Order = 2)]
+    public string Username { get; set; } = string.Empty;
+
 }
