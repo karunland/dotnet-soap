@@ -1,0 +1,342 @@
+<xs:schema xmlns:tns="https://payment.fairfinansman.com.tr/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="https://payment.fairfinansman.com.tr/">
+    <xs:element name="cancelAutoPaymentRequest" type="tns:cancelAutoPaymentRequest"/>
+    <xs:element name="cancelAutoPaymentResponse" type="tns:cancelAutoPaymentResponse"/>
+    <xs:element name="completeReconciliationRequest" type="tns:completeReconciliationRequest"/>
+    <xs:element name="completeReconciliationResponse" type="tns:completeReconciliationResponse"/>
+    <xs:element name="detailedReconciliationRequest" type="tns:detailedReconciliationRequest"/>
+    <xs:element name="detailedReconciliationResponse" type="tns:detailedReconciliationResponse"/>
+    <xs:element name="getOpenInvoicesRequest" type="tns:getOpenInvoicesRequest"/>
+    <xs:element name="getOpenInvoicesResponse" type="tns:getOpenInvoicesResponse"/>
+    <xs:element name="getOpenInvoicesWithAutoPaymentRequest" type="tns:getOpenInvoicesWithAutoPaymentRequest"/>
+    <xs:element name="getOpenInvoicesWithAutoPaymentResponse" type="tns:getOpenInvoicesWithAutoPaymentResponse"/>
+    <xs:element name="giveAutoPaymentRequest" type="tns:giveAutoPaymentRequest"/>
+    <xs:element name="giveAutoPaymentResponse" type="tns:giveAutoPaymentResponse"/>
+    <xs:element name="loginRequest" type="tns:loginRequest"/>
+    <xs:element name="loginResponse" type="tns:loginResponse"/>
+    <xs:element name="payInvoiceRequest" type="tns:payInvoiceRequest"/>
+    <xs:element name="payInvoiceResponse" type="tns:payInvoiceResponse"/>
+    <xs:element name="queryAutoPaymentRequest" type="tns:queryAutoPaymentRequest"/>
+    <xs:element name="queryAutoPaymentResponse" type="tns:queryAutoPaymentResponse"/>
+    <xs:element name="reconciliateRequest" type="tns:reconciliateRequest"/>
+    <xs:element name="reconciliateResponse" type="tns:reconciliateResponse"/>
+    <xs:complexType name="giveAutoPaymentRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:autoPaymentApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="autoPaymentApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="autoPaymentDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="autoPaymentTypeId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="channelId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="contractId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="nameSurname" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="tckn" type="xs:string" minOccurs="0"/>
+                    <xs:element name="transactionId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="vkn" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="baseApiInput">
+        <xs:sequence>
+            <xs:element name="bankId" type="xs:int"/>
+            <xs:element name="bankUserName" type="xs:string" minOccurs="0"/>
+            <xs:element name="companyId" type="xs:int"/>
+            <xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="giveAutoPaymentResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:baseApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="baseApiOutput">
+        <xs:sequence>
+            <xs:element name="resultCode" type="xs:int"/>
+            <xs:element name="resultDesc" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:getOpenInvoicesApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="channelId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="creditCount" type="xs:int"/>
+                    <xs:element name="invoiceCount" type="xs:int"/>
+                    <xs:element name="paymentPeriod" type="xs:string" minOccurs="0"/>
+                    <xs:element name="queryKey" type="xs:string" minOccurs="0"/>
+                    <xs:element name="queryValue" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:getOpenInvoicesApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesApiOutput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiOutput">
+                <xs:sequence>
+                    <xs:element name="contractCount" type="xs:int" minOccurs="0"/>
+                    <xs:element name="subscriberId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="isSubscriberMatch" type="xs:boolean" minOccurs="0"/>
+                    <xs:element name="contractList" type="tns:contractListApiOutput" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="contractListApiOutput">
+        <xs:sequence>
+            <xs:element name="contract" type="tns:contractApiOutput" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="contractApiOutput">
+        <xs:sequence>
+            <xs:element name="contractId" type="xs:string" minOccurs="0"/>
+            <xs:element name="contractTypeId" type="xs:int" minOccurs="0" />
+            <xs:element name="contractDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="totalInstallmentCount" type="xs:int" minOccurs="0"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="invoiceList" type="tns:invoiceListApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="invoiceListApiInput">
+        <xs:sequence>
+            <xs:element name="invoice" type="tns:invoiceApiInput" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="invoiceApiInput">
+        <xs:sequence>
+            <xs:element name="contractId" type="xs:string" minOccurs="0"/>
+            <xs:element name="invoiceId" type="xs:int" minOccurs="0"/>
+            <xs:element name="subscriberId" type="xs:string" minOccurs="0"/>
+            <xs:element name="invoiceDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="dueDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="paymentPeriod" type="xs:string" minOccurs="0"/>
+            <xs:element name="invoiceTypeId" type="xs:int" minOccurs="0"/>
+            <xs:element name="installmentNumber" type="xs:int" minOccurs="0"/>
+            <xs:element name="nameSurname" type="xs:string" minOccurs="0"/>
+            <xs:element name="amount" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="isPayable" type="xs:boolean" minOccurs="0"/>
+
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reconciliateRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:reconciliationApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reconciliationApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reconType" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="reconciliateResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:reconciliationApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reconciliationApiOutput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiOutput">
+                <xs:sequence>
+                    <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reconciliationEntryList" type="tns:reconciliationEntryApiOutput" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="reconciliationEntryApiOutput">
+        <xs:sequence>
+            <xs:element name="count" type="xs:long"/>
+            <xs:element name="sumAmount" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="transactionType" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="completeReconciliationRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:reconciliationApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="completeReconciliationResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:baseApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="queryAutoPaymentRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:queryAutoPaymentApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="queryAutoPaymentApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="channelId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="contractId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="queryAutoPaymentResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:queryAutoPaymentApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="queryAutoPaymentApiOutput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiOutput">
+                <xs:sequence>
+                    <xs:element name="autoPaymentDate" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="payInvoiceRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:paymentApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="paymentApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="channelId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="invoiceList" type="tns:invoiceListApiInput" minOccurs="0"/>
+                    <xs:element name="paymentDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="paymentTypeId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="transactionId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="subscriberId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="contractId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="earlySettlementAmount" type="xs:decimal" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="payInvoiceResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:baseApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesWithAutoPaymentRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:getOpenInvoicesWithAutoPaymentApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesWithAutoPaymentApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="endDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="startDate" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesWithAutoPaymentResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:getOpenInvoicesWithAutoPaymentApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="getOpenInvoicesWithAutoPaymentApiOutput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiOutput">
+                <xs:sequence>
+                    <xs:element name="invoiceCount" type="xs:int"/>
+                    <xs:element name="invoiceList" type="tns:invoiceListApiInput" minOccurs="0"/>
+                    <xs:element name="sumAmount" type="xs:double" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="cancelAutoPaymentRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:cancelAutoPaymentApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="cancelAutoPaymentApiInput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiInput">
+                <xs:sequence>
+                    <xs:element name="autoPaymentDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="channelId" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="transactionId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="cancelAutoPaymentResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:baseApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="detailedReconciliationRequest">
+        <xs:sequence>
+            <xs:element name="arg0" type="tns:reconciliationApiInput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="detailedReconciliationResponse">
+        <xs:sequence>
+            <xs:element name="return" type="tns:reconciliationDetailApiOutput" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reconciliationEntryDetail">
+        <xs:sequence>
+            <xs:element name="contractId" type="xs:string" minOccurs="0"/>
+            <xs:element name="subscriberId" type="xs:string" minOccurs="0"/>
+            <xs:element name="dueDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="invoiceId" type="xs:int" minOccurs="0"/>
+            <xs:element name="txDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="channelId" type="xs:string" minOccurs="0"/>
+            <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="transactionId" type="xs:string" minOccurs="0"/>
+            <xs:element name="amount" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="transactionType" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reconciliationDetailApiOutput">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiOutput">
+                <xs:sequence>
+                    <xs:element name="reconDate" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reconciliationEntryDetailList" type="tns:reconciliationEntryDetail" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="loginRequest">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="loginResponse">
+        <xs:complexContent>
+            <xs:extension base="tns:baseApiOutput">
+                <xs:sequence>
+                    <xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,64 @@
+POST http://localhost:5000/XmlContract.asmx
+Content-Type: text/xml; charset=utf-8
+SOAPAction: https://payment.fairfinansman.com.tr/loginRequestMethodXml
+
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="https://payment.fairfinansman.com.tr/">
+   <soapenv:Header/>
+   <soapenv:Body>
+    <tem:loginMethodXml>
+      <tem:SoapBody>
+        <tem:Request>
+          <tem:username2>YourUsername2</tem:username2>
+          <tem:password2>YourPassword2</tem:password2>
+          <tem:anotherRequest>
+            <tem:password>YourPassword</tem:password>
+            <tem:username>YourUsername</tem:username>
+          </tem:anotherRequest>
+        </tem:Request>
+      </tem:SoapBody>
+    </tem:loginMethodXml>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+POST http://localhost:5000/XmlContract.asmx
+Content-Type: text/xml; charset=utf-8
+SOAPAction: https://payment.fairfinansman.com.tr/reconciliateRequestXml
+
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="https://payment.fairfinansman.com.tr/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tem:reconciliateRequest>
+      <tem:SoapBody>
+        <tem:Request>
+          <tem:arg0>
+            <tem:bankId>10</tem:bankId>
+            <tem:bankUserName>bank.user</tem:bankUserName>
+            <tem:companyId>12345</tem:companyId>
+            <tem:sessionId>ABCDEF-123456</tem:sessionId>
+            <tem:reconDate>2025-09-04</tem:reconDate>
+            <tem:reconType>Daily</tem:reconType>
+          </tem:arg0>
+        </tem:Request>
+      </tem:SoapBody>
+    </tem:reconciliateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+
+POST http://localhost:5000/XmlContract.asmx
+Content-Type: text/xml; charset=utf-8
+
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="https://payment.fairfinansman.com.tr/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tem:method>
+      <tem:method>
+        <tem:username>YourUsername</tem:username>
+        <tem:password>YourPassword</tem:password>
+      </tem:method>
+    </tem:method>
+  </soapenv:Body>
+</soapenv:Envelope>

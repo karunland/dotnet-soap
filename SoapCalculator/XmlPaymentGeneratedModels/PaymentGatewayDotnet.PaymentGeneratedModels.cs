@@ -85,21 +85,22 @@ namespace SoapCalculator.PaymentGeneratedModels
     [XmlIncludeAttribute(typeof(PaymentApiInput))]
     [XmlIncludeAttribute(typeof(QueryAutoPaymentApiInput))]
     [XmlIncludeAttribute(typeof(ReconciliationApiInput))]
+    // [DataContract(Namespace = "https://payment.fairfinansman.com.tr/")]
     public partial class BaseApiInput
     {
         
-        [RequiredAttribute(AllowEmptyStrings=true)]
-        [XmlElementAttribute("bankId", Form=XmlSchemaForm.Unqualified)]
+        [Required(AllowEmptyStrings=true)]
+        [XmlElementAttribute("bankId", Form=XmlSchemaForm.Unqualified, Order = 1)]
         public int BankId { get; set; }
         
-        [XmlElementAttribute("bankUserName", Form=XmlSchemaForm.Unqualified)]
+        [XmlElementAttribute("bankUserName", Form=XmlSchemaForm.Unqualified, Order = 2)]
         public string BankUserName { get; set; }
         
-        [RequiredAttribute(AllowEmptyStrings=true)]
-        [XmlElementAttribute("companyId", Form=XmlSchemaForm.Unqualified)]
+        [Required(AllowEmptyStrings=true)]
+        [XmlElementAttribute("companyId", Form=XmlSchemaForm.Unqualified, Order = 3)]
         public int CompanyId { get; set; }
         
-        [XmlElementAttribute("sessionId", Form=XmlSchemaForm.Unqualified)]
+        [XmlElementAttribute("sessionId", Form=XmlSchemaForm.Unqualified, Order = 4)]
         public string SessionId { get; set; }
     }
     
@@ -504,10 +505,12 @@ namespace SoapCalculator.PaymentGeneratedModels
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
     [XmlRootAttribute("reconciliateRequest", Namespace="https://payment.fairfinansman.com.tr/")]
+    [DataContract(Namespace = "https://payment.fairfinansman.com.tr/")]
     public partial class ReconciliateRequest
     {
         
-        [XmlElementAttribute("arg0", Form=XmlSchemaForm.Unqualified)]
+        [XmlElementAttribute("arg0", Form=XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember(Name = "arg0", Order = 1)]
         public ReconciliationApiInput Arg0 { get; set; }
     }
     
@@ -516,13 +519,16 @@ namespace SoapCalculator.PaymentGeneratedModels
     [XmlTypeAttribute("reconciliationApiInput", Namespace="https://payment.fairfinansman.com.tr/")]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    public partial class ReconciliationApiInput : BaseApiInput
+    [DataContract(Namespace = "https://payment.fairfinansman.com.tr/")]
+    public partial class ReconciliationApiInput
     {
         
-        [XmlElementAttribute("reconDate", Form=XmlSchemaForm.Unqualified)]
+        [XmlElementAttribute("reconDate", Form=XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember(Name = "reconDate", Order = 1)]
         public string ReconDate { get; set; }
         
-        [XmlElementAttribute("reconType", Form=XmlSchemaForm.Unqualified)]
+        [XmlElementAttribute("reconType", Form=XmlSchemaForm.Unqualified, Order = 2)]
+        [DataMember(Name = "reconType", Order = 2)]
         public string ReconType { get; set; }
     }
     

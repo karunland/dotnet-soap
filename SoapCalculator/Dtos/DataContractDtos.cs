@@ -3,7 +3,7 @@ using System.ServiceModel;
 
 namespace SoapCalculator.Dtos;
 
-[DataContract(Namespace = "http://tempuri.org/")]
+[DataContract(Namespace = "https://payment.fairfinansman.com.tr/")]
 public class LoginRequest
 {
 	[DataMember(Name = "password2", Order = 2)]
@@ -14,7 +14,7 @@ public class LoginRequest
 	public NestedClass AnotherRequest { get; set; } = new();
 }
 
-[DataContract(Namespace = "http://tempuri.org/")]
+[DataContract(Namespace = "https://payment.fairfinansman.com.tr/")]
 public class NestedClass
 {
 	[DataMember(Name = "password")]

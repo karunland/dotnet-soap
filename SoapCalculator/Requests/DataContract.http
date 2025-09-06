@@ -1,9 +1,9 @@
-POST http://localhost:5000/Calculator.asmx
+POST http://localhost:5000/DataContract.asmx
 Content-Type: text/xml; charset=utf-8
-SOAPAction: http://tempuri.org/loginRequestMethod
+SOAPAction: http://tempuri.org/loginMethod
 
 <?xml version="1.0" encoding="utf-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="https://payment.fairfinansman.com.tr/">
    <soapenv:Header/>
    <soapenv:Body>
       <tem:Request>
@@ -17,9 +17,9 @@ SOAPAction: http://tempuri.org/loginRequestMethod
    </soapenv:Body>
 </soapenv:Envelope>
 
-POST http://localhost:5000/Calculator.asmx
+POST http://localhost:5000/DataContract.asmx
 Content-Type: text/xml; charset=utf-8
-SOAPAction: http://tempuri.org/reconciliateRequest
+SOAPAction: https://payment.fairfinansman.com.tr/reconciliateRequest
 
 <?xml version="1.0" encoding="utf-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="https://payment.fairfinansman.com.tr/">
@@ -27,13 +27,13 @@ SOAPAction: http://tempuri.org/reconciliateRequest
   <soapenv:Body>
     <tem:Request>
       <tem:arg0>
-        <tem:CompanyId>12345</tem:CompanyId>
-        <tem:BankId>10</tem:BankId>
-        <tem:BankUserName>bank.user</tem:BankUserName>
-        <tem:SessionId>ABCDEF-123456</tem:SessionId>
-        <tem:ReconDate>2025-09-04</tem:ReconDate>
-        <tem:ReconType>Daily</tem:ReconType>
+        <tem:reconDate>2025-09-04</tem:reconDate>
+        <tem:reconType>Daily</tem:reconType>
+        # <tem:bankId>10</tem:bankId>
+        # <tem:bankUserName>harun korkmaz</tem:bankUserName>
+        # <tem:companyId>12345</tem:companyId>
+        # <tem:sessionId>ABCDEF-123456</tem:sessionId>
       </tem:arg0>
     </tem:Request>
   </soapenv:Body>
-</soapenv:Envelope>
+</soapenv:Envelope>`
